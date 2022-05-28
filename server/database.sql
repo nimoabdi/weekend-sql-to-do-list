@@ -1,0 +1,6 @@
+CREATE TABLE "to do" (
+"id" SERIAL PRIMARY KEY,
+"tasks" VARCHAR(50) NOT NULL,
+"status" VARCHAR (15) NOT NULL,
+"notes" VARCHAR(100)
+);
