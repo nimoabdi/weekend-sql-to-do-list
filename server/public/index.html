@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TO DO LIST</title>
+    <title>SQL to do list</title>
+    <script src="jqueryy.js"></script>
+    <script src="client.js"></script>
+    <link rel="stylesheet" href="./style.css"></script>
 </head>
 <body>
-    
+    <h1>TO DO LIST 📓</h1>
+    <input type="text" id="taskIn" placeholder="Your task">
+    <button id="taskBtn">Add task</button> 
+
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody id="viewTasks">
+        </tbody>
 </body>
 </html>

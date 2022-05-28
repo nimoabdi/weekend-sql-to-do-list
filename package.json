@@ -19,6 +19,7 @@
   "homepage": "https://github.com/nimoabdi/weekend-sql-to-do-list#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3"
   }
 }
