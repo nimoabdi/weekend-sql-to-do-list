@@ -14,8 +14,10 @@ $(document).on('click', '.completeButton', completeTask);
 
 function submitButton() {
     console.log('submit clicked');
-    let upTask = {};
-    upTask.upTask =  $('#viewTasks').val();
+    let upTask = {
+        tasks: $('#taskIn').val()
+    };
+    // upTask.tasks =  $('#viewTasks').val();
     addTask(upTask);
 }
 
