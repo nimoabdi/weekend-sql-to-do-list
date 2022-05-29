@@ -1,20 +1,26 @@
-$(document).ready(function(){
+$(document).ready(onReady);
+
+function onReady() {
     console.log('jQuery sourced.');
-    onReady();
-});
+    getTask();
+    clickHandlers();
+}
 
-function onReady(){
-$('#taskBtn').on('click', addTask);
-$(document).on('click', '.deleteButton', deleteTask)
-$(document).on('click', '.completeButton', completeTask)
+function clickHandlers() {
+$('#taskBtn').on('click', submitButton);
+$(document).on('click', '.deleteButton', deleteTask);
+$(document).on('click', '.completeButton', completeTask);
+}
 
-getTask();
+function submitButton() {
+    console.log('submit clicked');
+    let upTask = {};
+    upTask.upTask =  $('#viewTasks').val();
+    addTask(upTask);
 }
 
 function getTask() {
     console.log('in GET task');
-
-    $('#viewTasks').empty();
 
     $.ajax({
         type: 'GET',
@@ -44,16 +50,13 @@ function getTask() {
 // get tasks done
 
 
-function addTask(){
-
-    let taskValue = {
-        name:$('#viewTasks').val()
-    };
-
+function addTask(upTask){
+    console.log('in add task', upTask);
+    $('#viewInput').val('')
     $.ajax({
         method: 'POST',
         url: '/tasks',
-        data: taskValue
+        data: upTask
     }).then(function(response) {
         console.log('POST tasks works', response)
         getTask();
@@ -70,7 +73,7 @@ function deleteTask() {
 
     $.ajax({
         method: 'DELETE',
-        url: '/tasks',
+        url: '/tasks' + taskId,
         data: taskId
     }).then(function(response){
         console.log('DELETE works', response)
