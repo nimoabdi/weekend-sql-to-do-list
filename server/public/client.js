@@ -5,6 +5,8 @@ $(document).ready(function(){
 
 function onReady(){
 $('#taskBtn').on('click', addTask);
+$(document).on('click', '.deleteButton', deleteTask)
+$(document).on('click', '.completeButton', completeTask)
 
 getTask();
 }
@@ -22,11 +24,14 @@ function getTask() {
     for (let i = 0; i < response.length; i++) {
         $('#viewTasks').append(`
         <tr data-tasks-id="${response[i].id}">
-        <td>${response[i].tasks}</td>
-              <td>${response[i].status}</td>
-              <td>${response[i].notes}</td>
+            <td>${response[i].tasks}</td>
+            <td class="statusComplete">${response[i].status}</td>
               <td>
-                  <button class="doneButton">✅ </button>
+                  <button class="deleteButton">❌</button>
+              </td>
+
+              <td>
+                  <button class="completeButton">✅</button>
               </td>
         `)
     }
@@ -49,7 +54,35 @@ function addTask(){
     }).then(function(response) {
         console.log('POST tasks works', response)
         getTask();
-    })
+    }).catch((err) => {
+        alert('Failed to add task');
+        console.log('POST failed:', err);
+      });
+
+}
+
+function deleteTask() {
+    let taskId = $(this).parents('tr').data('task-id');
+    console.log('in delete', taskId);
+
+    $.ajax({
+        method: 'DELETE',
+        url: '/tasks',
+        data: taskId
+    }).then(function(response){
+        console.log('DELETE works', response)
+        getTask();
+
+    }).catch((err) => {
+        alert('Failed to delete task');
+        console.log('DELETE failed:', err);
+      });
+}
+
+function completeTask() {
+    console.log('in PUT');
+
+    let completedTask = $(this).parents('tr').data('task-id');
 
 }
 
