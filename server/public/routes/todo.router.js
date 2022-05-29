@@ -21,16 +21,17 @@ taskRouter.get('/', (req, res) => {{
 
             res.sendStatus(500);
         });
-}})
+}});
 
 
 //POST
-
+taskRouter.post('/', (req, res) =>{
+    let newTask = req.body;
+    console.log('adds new task', newTask);
+})
 
 
 // PUT
-
-
 
 // DELETE
 
