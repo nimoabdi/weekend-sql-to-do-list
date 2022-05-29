@@ -25,17 +25,20 @@ function getTask() {
         $('#viewTasks').append(`
         <tr data-tasks-id="${response[i].id}">
             <td>${response[i].tasks}</td>
-            <td class="statusComplete">${response[i].status}</td>
+            <td data-status="${response[i].status}">${response[i].status}<button class="completeButton">✅</button>
               <td>
                   <button class="deleteButton">❌</button>
               </td>
-
-              <td>
-                  <button class="completeButton">✅</button>
-              </td>
+        
         `)
     }
+    if (response.status === true) {
+        $(".completeButton").last().addClass("text-decoration-line-through");
+      } else if (response.status === false) {
+        $(".completeButton").last().addClass("text-decoration-none");
+      }
 });
+
 }       
 
 // get tasks done
@@ -81,8 +84,30 @@ function deleteTask() {
 
 function completeTask() {
     console.log('in PUT');
+    let taskId = $(this).parents('tr').data('task-id');
+    console.log('task id is', taskId);
 
-    let completedTask = $(this).parents('tr').data('task-id');
+    let status = $(this).parents('td').data('status');
+    console.log('task done', status);
 
-}
+    let statusTask = {
+        doneWithTask: status
+    }
+
+    $.ajax({
+        url:'/tasks/' + taskId,
+        method: 'PUT',
+        data: statusTask
+      })
+      .then(() => {
+        console.log('PUT success');
+        getTask();
+      })
+      .catch((err) => {
+        console.log('There as an error in PUT', err)
+      })
+    
+    }
+
+
 
