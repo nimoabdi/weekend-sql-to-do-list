@@ -42,7 +42,7 @@ $('#viewTasks').empty();
     $('#viewTasks').append(`
         <tr ${newClass} data-task-id="${value.id}">
             <td>${value.tasks}</td>
-            <td>${value.status}</td>
+            <td class="statusValue">${value.status}</td>
               <td>
                     <button class= "deleteButton">❌</button>
               </td>
@@ -83,13 +83,14 @@ function addTask(upTask){
 }
 
 function deleteTask() {
-    const taskId = $(this).parents('tr').data('task-id');
-    console.log('in delete', taskId);
+    // const taskId = $(this).parents('tr').data('task-id');
+    let deleteValue = {deleteValue: $(this).parents('tr').data('task-id')};
+    console.log('in delete', deleteValue);
 
     $.ajax({
         method: 'DELETE',
-        url: `/tasks/${taskId}`,
-        // data: taskId
+        url: '/tasks',
+        data: deleteValue
     }).then(function(response){
         getTask()
         console.log('DELETE works', response)
@@ -103,8 +104,22 @@ function deleteTask() {
 function completeTask() {
     console.log('in PUT');
 
-    const taskId = $(this).parents('tr').data('task-id');
-    console.log('task id is', taskId);
+    let statusTask = $(this).parents('tr').children('.statusValue').text();
+    let taskId = $(this).parents('tr').data('task-id');
+    let completeId;
+    // console.log('task id is', taskId);
+
+    if (statusTask === 'false') {
+        completeId = {
+            completeId: 'true',
+            taskId: taskId
+        };
+    } else {
+        completeId = {
+            completeId: 'false',
+            taskId: taskId
+        }
+    }
 
     // let status = $(this).parents('td').data('status');
     // console.log('task done', status);
@@ -114,9 +129,9 @@ function completeTask() {
     // }
 
     $.ajax({
-        url:`/tasks/${taskId}`,
+        url:'/tasks',
         method: 'PUT',
-        // data: statusTask
+        data: completeId
       })
       .then(() => {
         console.log('PUT success');

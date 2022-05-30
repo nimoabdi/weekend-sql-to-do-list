@@ -6,7 +6,7 @@ const taskRouter = express.Router();
 // GET
 
 taskRouter.get('/', (req, res) => {{
-    const sqlQuery = `
+    let sqlQuery = `
         SELECT * FROM "todos"
         ORDER BY "id" ASC
     `;
@@ -48,19 +48,21 @@ taskRouter.post('/', (req, res) =>{
 // PUT
 
 taskRouter.put('/:id', (req, res) => {
-    let taskId = req.params.id;
-    console.log('complete request for id', taskId);
+    // let taskId = req.params.id;
+    // console.log('complete request for id', taskId);
+    console.log(req.body.completeId ,req.body.taskId);
 
     
 
     const sqlQuery = `
     UPDATE "todos"
-    SET "status" = NOT "status"
-    WHERE id = $1;
+    SET "status" = $1;
+    WHERE id = $2;
     `
 
-    const sqlParams = [
-        taskId
+    let sqlParams = [
+        req.body.completeId,
+        req.body.taskId 
     ];
 
     pool.query(sqlQuery, sqlParams)
@@ -78,15 +80,15 @@ taskRouter.put('/:id', (req, res) => {
 // DELETE
 
 taskRouter.delete('/:id', (req, res) => {
-    let taskId = req.params.id;
-    console.log('Delete request for id', taskId);
+    // let taskId = req.params.id;
+    console.log('Delete request for id', req.body.deleteValue);
 
     let sqlQuery = `
     DELETE FROM "todos" 
     WHERE "id" = $1;
     `;
-    const sqlParams = [
-        taskId,             
+    let sqlParams = [
+        req.body.deleteValue,             
     ];
 
     pool.query(sqlQuery, sqlParams)
