@@ -2,6 +2,9 @@ body {
     background-color: moccasin;
 }
 
+.green {
+    background-color: green;
+}
 .grey {
     background-color: grey;
 }
@@ -10,5 +13,9 @@ body {
 
 th, td {
     border: 1px solid black;
-    padding: 10px;
+    padding: 20px;
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
 }

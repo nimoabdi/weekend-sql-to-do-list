@@ -32,17 +32,17 @@ $('#viewTasks').empty();
 }).then(function(response) {
     console.log('GET tasks', response); 
     for (let value of response) {
-        if(value.status === 'false') {
-            newClass = 'class = "grey"';
+        if(value.status === 'true') {
+            newClass = 'class = "green"';
         }
         else {
-            newClass = 'class = "green"';
+            newClass = 'class = "grey"';
         }
     
     $('#viewTasks').append(`
         <tr ${newClass} data-task-id="${value.id}">
             <td>${value.tasks}</td>
-            <td>${value.status}></td>
+            <td>${value.status}</td>
               <td>
                     <button class= "deleteButton">❌</button>
               </td>
