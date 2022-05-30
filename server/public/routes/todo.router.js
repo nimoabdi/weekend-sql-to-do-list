@@ -8,7 +8,7 @@ const taskRouter = express.Router();
 taskRouter.get('/', (req, res) => {{
     const sqlQuery = `
         SELECT * FROM "todos"
-        ORDER BY "tasks" ASC
+        ORDER BY "id" ASC
     `;
 
     pool.query(sqlQuery)
@@ -26,30 +26,21 @@ taskRouter.get('/', (req, res) => {{
 
 //POST
 taskRouter.post('/', (req, res) =>{
-    let upTask = req.body;
-    console.log('adds new task', upTask);
+    let newTask = req.body;
+    console.log('adds new task', newTask);
 
-
-    const sqlQuery = `
+    let queryText = `
     INSERT INTO "todos" ("tasks")
-        
-    VALUES
-        ($1);
-`; 
-const sqlParams = [
-    req.body.tasks,        
-    req.body.status          
-];
-console.log(sqlQuery);
-
-pool.query(sqlQuery, sqlParams)
-        .then(() => {
-            res.sendStatus(201);
-        })
-        .catch((err) => {
-            console.log(`POST to db failed: ${err}`);
-            res.sendStatus(500);
-        });
+    VALUES ($1);
+    `;
+  pool.query(queryText, [newTask.tasks])
+    .then(dbRes => {
+      res.sendStatus(201);
+    }).catch(error => {
+      console.log(`Error adding new task`, error);
+      res.sendStatus(500);
+    });
+    
 
 });
 
@@ -60,27 +51,16 @@ taskRouter.put('/:id', (req, res) => {
     let taskId = req.params.id;
     console.log('complete request for id', taskId);
 
-    let doneWithTask = req.body.doneWithTask;
-    console.log('task status', doneWithTask);
-
-    let statusTask;
-    if(doneWithTask === 'true'){
-        statusTask = false;
-    }
-    else{
-        statusTask= true;
-    }
-    console.log('task status', statusTask);
+    
 
     const sqlQuery = `
     UPDATE "todos"
-    SET "status" = $2
+    SET "status" = NOT "status"
     WHERE id = $1;
     `
 
     const sqlParams = [
-        taskId,
-        statusTask
+        taskId
     ];
 
     pool.query(sqlQuery, sqlParams)
