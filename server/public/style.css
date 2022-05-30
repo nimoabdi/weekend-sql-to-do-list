@@ -1,3 +1,14 @@
-/* .completeButton{
-    background-color: green;
-} */
+body {
+    background-color: moccasin;
+}
+
+.grey {
+    background-color: grey;
+}
+
+
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+}

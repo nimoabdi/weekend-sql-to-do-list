@@ -32,17 +32,17 @@ $('#viewTasks').empty();
 }).then(function(response) {
     console.log('GET tasks', response); 
     for (let value of response) {
-        if(value.status === 'true') {
-            newClass = 'class = "green"';
+        if(value.status === 'false') {
+            newClass = 'class = "grey"';
         }
         else {
-            newClass = 'class = "grey"';
+            newClass = 'class = "green"';
         }
     
     $('#viewTasks').append(`
         <tr ${newClass} data-task-id="${value.id}">
             <td>${value.tasks}</td>
-            <td data-status="${value.status}">
+            <td>${value.status}></td>
               <td>
                     <button class= "deleteButton">❌</button>
               </td>
@@ -50,7 +50,7 @@ $('#viewTasks').empty();
                     <button class="completeButton">✅</button>
                     
               </td>
-          </td>
+          
 
         </tr>
         `);
@@ -62,35 +62,6 @@ $('#viewTasks').empty();
           });
     }    
        
-
-//     for (let i = 0; i < response.length; i++) {
-//       let task = response[i];
-//       if (task.status === true){
-//         console.log('task true');
-//         // $('#.completeButton').addClass('green');
-//       } else if (task.status === false) {
-//         console.log('task false');
-//         // $('#.completeButton').addClass('white');
-//       }
-//         $('#viewTasks').append(`
-//         <tr data-tasks-id="${task[i].id}">
-//             <td>${task[i].tasks}</td>
-//             <td data-status="${task[i].status}">
-//               <td>
-//                   <button class="deleteButton">❌</button>
-//               </td>
-//               <td>
-//                     <button class="completeButton">✅</button>
-//               </td>
-//           </td>
-
-//         </tr>
-//         `)
-        
-       
-// }
-      
-
 // get tasks done
 
 
