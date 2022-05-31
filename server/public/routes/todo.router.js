@@ -47,18 +47,18 @@ taskRouter.post('/', (req, res) =>{
 
 // PUT
 
-taskRouter.put('/:id', (req, res) => {
+taskRouter.put('/', (req, res) => {
     // let taskId = req.params.id;
     // console.log('complete request for id', taskId);
     console.log(req.body.completeId ,req.body.taskId);
 
     
 
-    const sqlQuery = `
+    let sqlQuery = `
     UPDATE "todos"
-    SET "status" = $1;
-    WHERE id = $2;
-    `
+    SET "status" = $1
+    WHERE "id" = $2
+    `;
 
     let sqlParams = [
         req.body.completeId,
@@ -79,7 +79,7 @@ taskRouter.put('/:id', (req, res) => {
 
 // DELETE
 
-taskRouter.delete('/:id', (req, res) => {
+taskRouter.delete('/', (req, res) => {
     // let taskId = req.params.id;
     console.log('Delete request for id', req.body.deleteValue);
 
@@ -94,7 +94,7 @@ taskRouter.delete('/:id', (req, res) => {
     pool.query(sqlQuery, sqlParams)
     .then(() => {
       console.log('task deleted');
-      res.sendStatus(204);
+      res.sendStatus(200);
     })
     .catch( (error) => {
       console.log('error in database', error);

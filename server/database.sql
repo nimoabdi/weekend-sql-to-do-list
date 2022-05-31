@@ -5,10 +5,10 @@ CREATE TABLE "todos" (
 );
 
 INSERT INTO "todos"
-("tasks")
+("tasks", "status")
 VALUES
-('Take a jog'),
-('Clean bedroom'),
-('Grocery shopping');
+('Take a jog', false),
+('Clean bedroom', false),
+('Grocery shopping', false);
 
 SELECT * FROM "todos";

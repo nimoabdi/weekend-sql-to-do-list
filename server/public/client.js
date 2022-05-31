@@ -32,7 +32,7 @@ $('#viewTasks').empty();
 }).then(function(response) {
     console.log('GET tasks', response); 
     for (let value of response) {
-        if(value.status === 'true') {
+        if(value.status === true) {
             newClass = 'class = "green"';
         }
         else {
@@ -72,8 +72,8 @@ function addTask(upTask){
         method: 'POST',
         url: '/tasks',
         data: upTask
-    }).then(function(response) {
-        console.log('POST tasks works', response)
+    }).then(() => {
+        console.log('POST tasks works')
         getTask();
     }).catch((err) => {
         alert('Failed to add task');
@@ -104,19 +104,20 @@ function deleteTask() {
 function completeTask() {
     console.log('in PUT');
 
-    let statusTask = $(this).parents('tr').children('.statusValue').text();
+    let statusTask = $(this).parents('tr').children('.statusValue');
     let taskId = $(this).parents('tr').data('task-id');
     let completeId;
     // console.log('task id is', taskId);
 
-    if (statusTask === 'false') {
+    if (statusTask === false) {
         completeId = {
-            completeId: 'true',
+            completeId: true,
             taskId: taskId
         };
-    } else {
+    } 
+    else {
         completeId = {
-            completeId: 'false',
+            completeId: true,
             taskId: taskId
         }
     }
@@ -129,8 +130,8 @@ function completeTask() {
     // }
 
     $.ajax({
-        url:'/tasks',
         method: 'PUT',
+        url: '/tasks',
         data: completeId
       })
       .then(() => {
